@@ -1,26 +1,19 @@
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-  title: {
-    type: String,
+  date: {
+    type: Date,
     required: true,
   },
-  image: {
-    type: String,
+  to: {
+    type: Date,
     require: true,
   },
-  cloudinaryId: {
-    type: String,
-    require: true,
-  },
-  caption: {
+  reason: {
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
-    required: true,
-  },
+  
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

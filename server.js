@@ -10,6 +10,9 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const path = require('path');
+
+
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -36,6 +39,10 @@ app.use(logger("dev"));
 //Use forms for put / delete
 app.use(methodOverride("_method"));
 
+__dirname = path.resolve();
+app.use(express.static((path.join(__dirname, 'views'))));
+
+
 // Setup Sessions - stored in MongoDB
 app.use(
   session({
@@ -61,3 +68,11 @@ app.use("/post", postRoutes);
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");
 });
+
+app.get("/",(req,res)=>{
+  const year = req.query.year || 2022;
+  const months = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"];
+
+  res.render("index.ejs",{calendar: calendar(year),months,year});
+});  
